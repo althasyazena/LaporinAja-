@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LaporinAja! - Portal Laporan Pengaduan Online</title>
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="shortcut icon" href="css/assets/Icon-Logo-LaporinAja.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.css"
+        integrity="sha512-kJlvECunwXftkPwyvHbclArO8wszgBGisiLeuDFwNM8ws+wKIw0sv1os3ClWZOcrEB2eRXULYUsm8OVRGJKwGA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+
+    <!-- CDN VanillaTilt -->
+    <script src="https://cdn.jsdelivr.net/npm/vanilla-tilt@1.8.1/dist/vanilla-tilt.min.js"></script>
+</head>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navbar-content">
+            <div class="logo">
+                <a href="#">
+                    <img src="css/assets/LaporinAja!-Logo.png" alt="">
+                </a>
+            </div>
+
+            <i class='bx bx-menu' id="menu-icon"></i>
+
+            <ul class="nav-links">
+                <li><a href="#home">Beranda</a></li>
+                <li><a href="#map">Peta Laporan</a></li>
+                <li><a href="#report">Laporan</a></li>
+                <li><a href="#about">Tentang</a></li>
+            </ul>
+        </div>
+    </nav>
+    <!-- End Navbar -->
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <h1>
+            Selamat Datang di
+            <span class="logo-text" data-tilt>
+                <img src="css/assets/LaporinAja!-Logo.png" alt="LaporinAja!" class="tilt-image">
+            </span>
+        </h1>
+        <p>Portal Laporan Pengaduan Online Provinsi Jawa Barat</p>
+
+        <!-- Lacak Aduan Card -->
+        <div class="lacak-aduan">
+            <div class="card-lacak">
+                <h2><span class="highlight-blue">Lacak</span> Aduan</h2>
+                <p>Pernah melaporkan keluhan di website ini? Coba cari laporanmu di sini.</p>
+                <div class="search-box">
+                    <input type="text" id="searchInput" placeholder="Contoh : Jalan Berlubang" />
+                    <button id="btnSearch">Cari Laporan</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main -->
+    <div class="container">
+        <!-- Report Section -->
+        <section class="report-section" id="report">
+            <div class="laporan-header">
+                <h2 class="laporan-title">Laporan <span class="highlight-green">Terbaru</span></h2>
+            </div>
+
+            <div class="filter-section">
+                <div class="filter-buttons">
+                    <button class="filter-btn active">Semua</button>
+                    <button class="filter-btn">Menunggu</button>
+                    <button class="filter-btn">Diproses</button>
+                    <button class="filter-btn">Selesai</button>
+                </div>
+            </div>
+
+            <!-- Menampilkan Laporan (JS render di sini) -->
+            <div id="reportsList" class="reports-grid"></div>
+        </section>
+
+
+        <!-- Status Section -->
+        <section class="stats-section">
+            <div class="stat-card">
+                <div class="stat-number" id="stat-total">0</div>
+                <div class="stat-label highlight-white">Total Laporan</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="stat-pending">0</div>
+                <div class="stat-label highlight-white">Menunggu</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="stat-progress">0</div>
+                <div class="stat-label highlight-white">Diproses</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="stat-resolved">0</div>
+                <div class="stat-label highlight-white">Selesai</div>
+            </div>
+        </section>
+
+        <!-- Map Section -->
+        <section class="map-section">
+            <div class="section-header">
+                <h2 class="section-title">Peta <span class="highlight-yellow">Lokasi</span> Laporan</h2>
+                <button class="btn-add" onclick="openModal()">+ Tambah Laporan</button>
+            </div>
+
+            <div class="map-container">
+                <div id="map" style="width: 100%; height: 100%;"></div>
+            </div>
+        </section>
+    </div>
+
+    <!-- FAQ Section -->
+    <section class="faq-section" id="faq">
+        <h2 class="faq-title">Pertanyaan <span class="highlight-yellow">Umum</span></h2>
+        <p class="section-subtitle">Masih bingung? Berikut jawaban untuk pertanyaan yang sering diajukan.</p>
+
+        <div class="faq-container">
+            <div class="faq-item">
+                <button class="faq-question">Apa itu LaporinAja? <i class="ri-arrow-down-s-line"></i></button>
+                <div class="faq-answer">
+                    <p>LaporinAja! adalah platform pengaduan online masyarakat Jawa Barat untuk melaporkan berbagai
+                        permasalahan publik secara cepat dan mudah.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question">Nama saya siapa? <i class="ri-arrow-down-s-line"></i></button>
+                <div class="faq-answer">
+                    <p>abjeah abjeah abjeah abjeah abjeah.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question">Saya darimana? <i class="ri-arrow-down-s-line"></i></button>
+                <div class="faq-answer">
+                    <p>abjeah abjeah abjeah abjeah abjeah.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Main -->
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2025 LaporinAja!, Bersama Membangun Kota yang Lebih Baik.</p>
+    </footer>
+    <!-- Modal -->
+    <div class="modal" id="modalTambah">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Tambah <span class="highlight-yellow">Laporan</span> Baru</h2>
+                <button class="btn-close" onclick="closeModal()">&times;</button>
+            </div>
+            <form id="addForm" action="" class="report-form">
+                <!-- ID -->
+                <input type="hidden">
+
+                <div class="form-group">
+                    <label for="judul">Judul Laporan *</label>
+                    <input id="judul" type="text" placeholder="Contoh: Jalan Berlubang di Jl, Sudirman" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="kategori">Kategori *</label>
+                    <select id="kategori" required>
+                        <option value="">Pilih Kategori</option>
+                        <option value="jalan">Jalan & Infrasrtuktur</option>
+                        <option value="kebersihan">Kebersihan</option>
+                        <option value="lampu">Lampu Jalan</option>
+                        <option value="drainase">Drainase</option>
+                        <option value="fasilitas">Fasilitas Umum</option>
+                        <option value="lainnya">Lainnya</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="deskripsi">Deskripsi Laporan *</label>
+                    <textarea id="deskripsi" rows="4" placeholder="Jelaskan Detail Masalah yang Ingin Dilaporkan"
+                        required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="lokasi">Lokasi *</label>
+                    <input id="lokasi" type="text" placeholder="Contoh: Jl. Sudirman No. 123" required></input>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="kecamatan">Kecamatan *</label>
+                        <input id="kecamatan" type="text" placeholder="Jonggol" required></input>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="kelurahan">Kelurahan *</label>
+                        <input id="kelurahan" type="text" placeholder="Sukasirna" required></input>
+                    </div>
+                </div>
+
+                <div class="form-divider"></div>
+
+                <div class="form-group">
+                    <label for="nama">Nama Pelapor *</label>
+                    <input id="nama" type="text" placeholder="Nama Lengkap Anda" required></input>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="email">Email *</label>
+                        <input id="email" type="email" placeholder="example@gmail.com" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="telepon">No. Telepon *</label>
+                        <input id="telepon" type="text" placeholder="08123456789" required>
+                    </div>
+                </div>
+
+                <div class="form-action">
+                    <button type="button" class="btn-cancel" onclick="closeModal()">Batal</button>
+                    <button type="submit" class="btn-submit">Kirim</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Detail -->
+    <div class="modal" id="modalDetail">
+        <div class="modal-content">
+            <div class="detail-header">
+                <h2>Detail <span class="highlight-yellow">Laporan</span></h2>
+                <button class="btn-close" onclick="closeDetailModal()">&times;</button>
+            </div>
+
+            <div class="modal-body">
+                <div class="detail-top">
+                    <div class="detail-title-wrap">
+                        <h3 id="detail-judul" class="detail-title">Judul Laporan</h3>
+                        <span id="detail-status" class="status-badge">Status</span>
+                    </div>
+                    <p id="detail-deskripsi" class="detail-description">
+                        Deskripsi laporan akan tampil di sini dan menjelaskan secara singkat masalah yang dilaporkan.
+                    </p>
+                </div>
+
+                <hr class="divider">
+
+                <!-- Informasi lain -->
+                <div class="detail-grid">
+                    <p><strong>Kategori:</strong> <span id="detail-kategori"></span></p>
+                    <p><strong>Lokasi:</strong> <span id="detail-lokasi"></span></p>
+                    <p><strong>Kecamatan:</strong> <span id="detail-kecamatan"></span></p>
+                    <p><strong>Kelurahan:</strong> <span id="detail-kelurahan"></span></p>
+                    <p><strong>Tanggal Dibuat:</strong> <span id="detail-tanggal"></span></p>
+                </div>
+
+                <div class="form-divider"></div>
+
+                <!-- Data Pelapor -->
+                <div class="detail-section">
+                    <h3>👤 Data Pelapor</h3>
+                    <div class="detail-grid">
+                        <p><strong>Nama:</strong> <span id="detail-nama"></span></p>
+                        <p><strong>Email:</strong> <span id="detail-email"></span></p>
+                        <p><strong>Telepon:</strong> <span id="detail-telepon"></span></p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <!-- JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script src="js/ui.js"></script>
+    <script src="js/reportManager.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/map.js"></script>
+</body>
+
+</html>
