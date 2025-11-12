@@ -56,6 +56,7 @@ function openModal() {
 
 function closeModal() {
     modal.style.display = "none";
+    form.reset();
 }
 
 form.addEventListener("submit", (e) => {

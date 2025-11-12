@@ -42,6 +42,8 @@ function addReport() {
                 initMap();
                 
                 alert("Laporan Berhasil Ditambahkan")
+
+                form.reset()
             },
             // err : Jika Gagal Mendapatkan Lokasi
             (err) => {
